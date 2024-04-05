@@ -4,8 +4,8 @@ import { MdBarChart } from "react-icons/md";
 import { BsBoxSeam } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { FaRobot } from "react-icons/fa";
 import CommonContext from "../StateManagment/CommonContext";
+import { IoLogoTableau } from "react-icons/io5";
 
 const Header = () => {
   const {setSelectedTab,selectedTab,portfolioData,getPortFolioToken,diveDeepData,getDiveDeepToken,analysisData,getAnalysisToken} = useContext(CommonContext);
@@ -111,7 +111,7 @@ const Header = () => {
               <li className="col-12">
                 <NavLink to={"/home/matsuri-ai"} className="nav-link rounded" onClick={handleMatsuriAi}>
                   <span className="pe-4">
-                    <FaRobot className="fs-5" />
+                    <IoLogoTableau className="fs-5" />
                   </span>
                   Matsuri AI
                 </NavLink>

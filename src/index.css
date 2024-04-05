@@ -122,3 +122,6 @@ a.nav-link.active {
   height: 10%!important;
   overflow: hidden!important;
 }
+.hide-searchIcon{
+  pointer-events: none;
+}
