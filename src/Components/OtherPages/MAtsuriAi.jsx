@@ -81,7 +81,7 @@ const MatsuriAi = () => {
           onKeyDown={handleKeyDown}
           onChange={(e) => setSearchData(e.target.value)}
           type="text"
-          placeholder="Type here..."
+          placeholder="Ask questions about the properties: For example, how many leases are expiring in 2024 - show id, name, and location"
           autoFocus
           value={searchData}
           disabled={loading}
