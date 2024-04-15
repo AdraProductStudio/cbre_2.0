@@ -52,7 +52,7 @@ export const DataProvider = ({ children }) => {
       try {
           await axios({
               method: 'post',
-              url: 'https://matsuri.adraproductstudio.com/login',
+              url: 'https://cbreapi.matsuritech.com/login',
               auth: {
                   username: inputDetails.username,
                   password: sha256(inputDetails.password)
