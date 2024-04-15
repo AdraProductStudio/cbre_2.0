@@ -43,7 +43,7 @@ const MatsuriAi = () => {
       setInitial(true);
       try {
         await axios
-          .post("https://matsuri.adraproductstudio.com/defog", {
+          .post("https://cbreapi.matsuritech.com/defog", {
             question: value,
           })
           .then((response) => {
