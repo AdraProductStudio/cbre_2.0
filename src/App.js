@@ -20,7 +20,7 @@ function App() {
             <Route path="portfolio" element={<PowerBIPortfolioReports/>}/>
             <Route path="dive-deep" element={<PowerBIDiveDeepReports/>}/>
             <Route path="analysis" element={<PowerBIAnalysisReports/>}/>
-            <Route path="piesAcre" element={<PowerBIPiesAcreReport/>}/>
+            <Route path="pies" element={<PowerBIPiesAcreReport/>}/>
             <Route path="matsuri-ai" element={<MatsuriAi/>}/>
           </Route>
 

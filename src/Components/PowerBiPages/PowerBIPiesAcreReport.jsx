@@ -9,7 +9,7 @@ const PowerBIPiesAcreReport = () => {
     const {piesAcreData,setSelectedTab} = useContext(CommonContext);
 
     useEffect(()=>{
-        setSelectedTab("Pies Acre")
+        setSelectedTab("PIES")
     },[])
 
     return (

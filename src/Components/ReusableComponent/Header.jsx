@@ -129,11 +129,11 @@ const handleMatsuriAi = () => {
                 </NavLink>
               </li>
               <li className="col-12">
-                <NavLink to={"/home/piesAcre"} className="nav-link rounded" onClick={handlePieAcres}>
+                <NavLink to={"/home/pies"} className="nav-link rounded" onClick={handlePieAcres}>
                   <span className="pe-4">
                     <MdBarChart className="fs-5" />
                   </span>
-                  Pies Acre
+                  PIES
                 </NavLink>
               </li>
               <li className="col-12">
