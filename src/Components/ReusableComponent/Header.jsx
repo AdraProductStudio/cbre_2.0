@@ -8,37 +8,57 @@ import CommonContext from "../StateManagment/CommonContext";
 import { IoLogoTableau } from "react-icons/io5";
 
 const Header = () => {
-  const {setSelectedTab,selectedTab,portfolioData,getPortFolioToken,diveDeepData,getDiveDeepToken,analysisData,getAnalysisToken} = useContext(CommonContext);
+  const {setSelectedTab,selectedTab,portfolioData,getPortFolioToken,getPieAcreToken,diveDeepData,piesAcreData, getDiveDeepToken,analysisData,getAnalysisToken} = useContext(CommonContext);
 
   const handleLogout = () => {
-    localStorage.removeItem("initialToken");
-    localStorage.removeItem("portfolioToken");
-    localStorage.removeItem("diveDeepToken");
-    localStorage.removeItem("analysisToken"); 
+    localStorage.removeItem('initialToken');
+        localStorage.removeItem("portfolioToken")
+        localStorage.removeItem("diveDeepToken");
+        localStorage.removeItem("analysisToken"); 
+        localStorage.removeItem("pieAcreToken");
   };
 
   const handlePortfolio = () => {
     getPortFolioToken(portfolioData.group_id,portfolioData.report_id);
-    localStorage.removeItem("diveDeepToken");
-    localStorage.removeItem("analysisToken");
-  };
-  const handleDiveDeep = () => {
-    getDiveDeepToken(diveDeepData.group_id,diveDeepData.report_id);
-    localStorage.removeItem("analysisToken");
-    localStorage.removeItem("portfolioToken");
-  };
-  const handleAnalysis = () => {
-    getAnalysisToken(analysisData.group_id,analysisData.report_id);
-    localStorage.removeItem("diveDeepToken");
-    localStorage.removeItem("portfolioToken");
+        localStorage.removeItem("diveDeepToken");
+        localStorage.removeItem("analysisToken"); 
+        localStorage.removeItem("pieAcreToken")
   };
 
-  const handleMatsuriAi = () => {
+  const handleDiveDeep = () => { 
+    getDiveDeepToken(diveDeepData.group_id,diveDeepData.report_id);
+    localStorage.removeItem("analysisToken");
+    localStorage.removeItem("portfolioToken"); 
+    localStorage.removeItem("pieAcreToken")
+}
+const handleAnalysis = () => { 
+    getAnalysisToken(analysisData.group_id,analysisData.report_id);
+    localStorage.removeItem("diveDeepToken");
+    localStorage.removeItem("portfolioToken"); 
+    localStorage.removeItem("pieAcreToken")
+}
+
+const handlePieAcres = () => {
+    getPieAcreToken(piesAcreData.group_id, piesAcreData.report_id)
+    localStorage.removeItem("portfolioToken")
+    localStorage.removeItem("diveDeepToken");
+    localStorage.removeItem("analysisToken"); 
+
+}
+
+const handleMatsuriAi = () => { 
     localStorage.removeItem("diveDeepToken");
     localStorage.removeItem("analysisToken");
-    localStorage.removeItem("portfolioToken");
+    localStorage.removeItem("portfolioToken"); 
+    localStorage.removeItem("pieAcreToken")
     setSelectedTab("Matsuri Ai")
-  };
+}
+
+
+
+
+
+
 
   return (
     <div className="header-component">
@@ -106,6 +126,14 @@ const Header = () => {
                     <MdBarChart className="fs-5" />
                   </span>
                   Analysis
+                </NavLink>
+              </li>
+              <li className="col-12">
+                <NavLink to={"/home/piesAcre"} className="nav-link rounded" onClick={handlePieAcres}>
+                  <span className="pe-4">
+                    <MdBarChart className="fs-5" />
+                  </span>
+                  Pies Acre
                 </NavLink>
               </li>
               <li className="col-12">

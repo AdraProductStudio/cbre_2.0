@@ -6,37 +6,52 @@ import {  NavLink } from 'react-router-dom';
 import { RiLogoutBoxLine } from "react-icons/ri";
 import CommonContext from '../StateManagment/CommonContext';
 import { IoLogoTableau } from 'react-icons/io5';
+import { HiOutlineDocumentReport } from 'react-icons/hi';
 
 
 const Sidebar = () => {
-    const {portfolioData,getPortFolioToken,diveDeepData,getDiveDeepToken,analysisData,getAnalysisToken} = useContext(CommonContext);
+    const {portfolioData,getPortFolioToken,diveDeepData,piesAcreData, getDiveDeepToken,analysisData,getAnalysisToken, getPieAcreToken} = useContext(CommonContext);
 
     const handleLogout = () => {
         localStorage.removeItem('initialToken');
         localStorage.removeItem("portfolioToken")
         localStorage.removeItem("diveDeepToken");
         localStorage.removeItem("analysisToken"); 
+        localStorage.removeItem("pieAcreToken");
     }   
 
     const handlePortfolio = () => {  
         getPortFolioToken(portfolioData.group_id,portfolioData.report_id);
         localStorage.removeItem("diveDeepToken");
         localStorage.removeItem("analysisToken"); 
+        localStorage.removeItem("pieAcreToken")
     }
     const handleDiveDeep = () => { 
         getDiveDeepToken(diveDeepData.group_id,diveDeepData.report_id);
         localStorage.removeItem("analysisToken");
         localStorage.removeItem("portfolioToken"); 
+        localStorage.removeItem("pieAcreToken")
     }
     const handleAnalysis = () => { 
         getAnalysisToken(analysisData.group_id,analysisData.report_id);
         localStorage.removeItem("diveDeepToken");
         localStorage.removeItem("portfolioToken"); 
+        localStorage.removeItem("pieAcreToken")
     }
+
+    const handlePieAcres = () => {
+        getPieAcreToken(piesAcreData.group_id, piesAcreData.report_id);
+        localStorage.removeItem("portfolioToken")
+        localStorage.removeItem("diveDeepToken");
+        localStorage.removeItem("analysisToken"); 
+    }
+
     const handleMatsuriAi = () => { 
         localStorage.removeItem("diveDeepToken");
         localStorage.removeItem("analysisToken");
         localStorage.removeItem("portfolioToken"); 
+        localStorage.removeItem("pieAcreToken")
+
     }
 
     
@@ -68,6 +83,12 @@ const Sidebar = () => {
                             <NavLink to={"/home/analysis"} className="nav-link rounded" onClick={handleAnalysis}>
                                 <span className='pe-4'><MdBarChart className='fs-5' /></span>
                                 Analysis
+                            </NavLink>
+                        </li>
+                        <li className='col-12'>
+                            <NavLink to={"/home/piesAcre"} className="nav-link rounded" onClick={handlePieAcres}>
+                                <span className='pe-4'><HiOutlineDocumentReport className='fs-5' /></span>
+                                Pies Acre
                             </NavLink>
                         </li>
                         <li className='col-12'>

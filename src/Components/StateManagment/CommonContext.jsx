@@ -27,6 +27,7 @@ export const DataProvider = ({ children }) => {
   const [portFolioReportToken, setPortFolioReportToken] = useState("");
   const [diveDeepReportToken, setDiveDeepReportToken] = useState("");
   const [analysisReportToken, setAnalysisReportToken] = useState("");
+  const [pieAcreReportToken,setPieAcreReportToken] = useState("")
 
   const [portfolioData,setPortfolioData]=useState({
           report_id:"f539cc14-d88e-44da-b5ee-c249956c5c77",
@@ -45,6 +46,16 @@ export const DataProvider = ({ children }) => {
       group_id:'e1b7db3e-7c59-445f-8509-6b00737d9781',
       embedUrl:"https://app.powerbi.com/reportEmbed?reportId=1c0ae235-7c89-4297-9ba6-f93e9883a9e0&groupId=e1b7db3e-7c59-445f-8509-6b00737d9781&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVdFU1QtVVMtRS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d"
   })
+
+  const [piesAcreData,setPiesAcreData]=useState({
+    report_id:"cbe1bb33-c8c4-48eb-8abe-65d984c966fa",
+    group_id:"e1b7db3e-7c59-445f-8509-6b00737d9781",
+    embedUrl: "https://app.powerbi.com/reportEmbed?reportId=cbe1bb33-c8c4-48eb-8abe-65d984c966fa&groupId=e1b7db3e-7c59-445f-8509-6b00737d9781&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVdFU1QtVVMtRS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19",
+})
+
+  
+
+
 
   const getTokenAPI = async() => {
       
@@ -97,6 +108,8 @@ export const DataProvider = ({ children }) => {
               },
           }).then((response) => {
 
+            console.log(response)
+
               if (response.status === 200) {
                   // console.log(response)
                   setGroups(response.data.value);
@@ -148,11 +161,15 @@ export const DataProvider = ({ children }) => {
                   authorization: `Bearer ${localStorage.getItem('initialToken')}`
               }
           }).then((response) => {
+            console.log(response)
               if (response.status === 200) {
                   setReport2(response.data.value)
-
+                  
                   setAnalysisData({...analysisData,id:response.data.value[0].id,embedUrl:response.data.value[0].embedUrl})
                   getAnalysisToken(group2_id, response.data.value[0].id)
+
+                  setPiesAcreData({...piesAcreData,id:response.data.value[5].id,embedUrl:response.data.value[5].embedUrl})
+                  getPieAcreToken(group2_id, response.data.value[5].id)
               }
           }).catch((err) => {
               console.log(err)
@@ -219,6 +236,26 @@ export const DataProvider = ({ children }) => {
       }
   }
 
+  const getPieAcreToken = async (groupId, reportId) => {
+    try {
+        await axios.post(`https://api.powerbi.com/v1.0/myorg/groups/${groupId}/reports/${reportId}/GenerateToken`, {}, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('initialToken')}`
+            }
+        }).then((response) => {
+            console.log(response)
+            if (response.status === 200) {
+                setPieAcreReportToken(response.data.token)
+                localStorage.setItem("pieAcreToken",response.data.token)                 
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
   
   return (
     <CommonContext.Provider
@@ -240,7 +277,10 @@ export const DataProvider = ({ children }) => {
         diveDeepData,
         setdiveDeepData,
         analysisData,
+        getPieAcreToken,
         setAnalysisData,
+        piesAcreData,
+        setPiesAcreData,
         selectedTab,
         setSelectedTab,
       }}

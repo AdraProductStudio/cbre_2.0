@@ -7,6 +7,7 @@ import PowerBIAnalysisReports from "./Components/PowerBiPages/PowerBIAnalysisRep
 import PowerBIDiveDeepReports from "./Components/PowerBiPages/PowerBIDiveDeepReports";
 import MatsuriAi from "./Components/OtherPages/MAtsuriAi";
 import Error404 from "./Components/OtherPages/Error404";
+import PowerBIPiesAcreReport from "./Components/PowerBiPages/PowerBIPiesAcreReport";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="portfolio" element={<PowerBIPortfolioReports/>}/>
             <Route path="dive-deep" element={<PowerBIDiveDeepReports/>}/>
             <Route path="analysis" element={<PowerBIAnalysisReports/>}/>
+            <Route path="piesAcre" element={<PowerBIPiesAcreReport/>}/>
             <Route path="matsuri-ai" element={<MatsuriAi/>}/>
           </Route>
 
