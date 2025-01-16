@@ -17,12 +17,8 @@ export const DataProvider = ({ children }) => {
 
   const [selectedTab, setSelectedTab] = useState("Portfolio");
 
-  const [groups, setGroups] = useState([])
-  const [groupData1, setGroupData1] = useState({});
-  const [groupData2, setGroupData2] = useState({});
 
-  const [report1, setReport1] = useState([])
-  const [report2, setReport2] = useState([])
+
 
   const [portFolioReportToken, setPortFolioReportToken] = useState("");
   const [diveDeepReportToken, setDiveDeepReportToken] = useState("");
@@ -44,6 +40,13 @@ export const DataProvider = ({ children }) => {
       report_id:"1c0ae235-7c89-4297-9ba6-f93e9883a9e0",
       group_id:'e1b7db3e-7c59-445f-8509-6b00737d9781',
       embedUrl:"https://app.powerbi.com/reportEmbed?reportId=1c0ae235-7c89-4297-9ba6-f93e9883a9e0&groupId=e1b7db3e-7c59-445f-8509-6b00737d9781&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVdFU1QtVVMtRS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZSwiZGlzYWJsZUFuZ3VsYXJKU0Jvb3RzdHJhcFJlcG9ydEVtYmVkIjp0cnVlfX0%3d"
+  })
+
+  const [piesData,setPiesData]=useState({
+    report_id: "cbe1bb33-c8c4-48eb-8abe-65d984c966fa",
+    group_id: "e1b7db3e-7c59-445f-8509-6b00737d9781",
+    embedUrl:
+      "https://app.powerbi.com/reportEmbed?reportId=cbe1bb33-c8c4-48eb-8abe-65d984c966fa&groupId=e1b7db3e-7c59-445f-8509-6b00737d9781&w=2&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly9XQUJJLVdFU1QtVVMtRS1QUklNQVJZLXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0IiwiZW1iZWRGZWF0dXJlcyI6eyJ1c2FnZU1ldHJpY3NWTmV4dCI6dHJ1ZX19",
   })
 
   const getTokenAPI = async() => {
@@ -97,12 +100,7 @@ export const DataProvider = ({ children }) => {
               },
           }).then((response) => {
 
-              if (response.status === 200) {
-                  // console.log(response)
-                  setGroups(response.data.value);
-                  setGroupData1(response.data.value[0])
-                  setGroupData2(response.data.value[1])
-
+              if (response.status === 200) {         
                   getGroup1Report(response.data.value[0].id);
                   getGroup2Report(response.data.value[1].id);
               }
@@ -124,7 +122,6 @@ export const DataProvider = ({ children }) => {
               }
           }).then((response) => {
               if (response.status === 200) {
-                  setReport1(response.data.value);
 
 
                   getPortFolioToken(group1_id, response.data.value[1].id)
@@ -149,10 +146,16 @@ export const DataProvider = ({ children }) => {
               }
           }).then((response) => {
               if (response.status === 200) {
-                  setReport2(response.data.value)
 
                   setAnalysisData({...analysisData,id:response.data.value[0].id,embedUrl:response.data.value[0].embedUrl})
                   getAnalysisToken(group2_id, response.data.value[0].id)
+
+                  setPiesData({
+                    ...piesData,
+                    id: response.data.value[5].id,
+                    embedUrl: response.data.value[5].embedUrl,
+                  });
+                  getPieAcreToken(group2_id, response.data.value[5].id);
               }
           }).catch((err) => {
               console.log(err)
@@ -219,6 +222,34 @@ export const DataProvider = ({ children }) => {
       }
   }
 
+  const getPieAcreToken = async (groupId, reportId) => {
+    console.log(groupId)
+    console.log(reportId)
+    try {
+      await axios
+        .post(
+          `https://api.powerbi.com/v1.0/myorg/groups/${groupId}/reports/${reportId}/GenerateToken`,
+          {},
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("initialToken")}`,
+            },
+          }
+        )
+        .then((response) => {
+            console.log(response.data.token)
+          if (response.status === 200) {
+            localStorage.setItem("pieAcreToken", response.data.token);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   
   return (
     <CommonContext.Provider
@@ -241,6 +272,9 @@ export const DataProvider = ({ children }) => {
         setdiveDeepData,
         analysisData,
         setAnalysisData,
+        piesData,
+        setPiesData,
+        getPieAcreToken,
         selectedTab,
         setSelectedTab,
       }}
